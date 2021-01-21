@@ -34,7 +34,7 @@ public class Cestas implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id_new;
+	private Long id;
 	
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
