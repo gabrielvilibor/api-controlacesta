@@ -12,15 +12,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.domain.Produto;
+import com.example.domain.ProdutosImagem;
 import com.example.services.ProdutoService;
+import com.example.services.ProdutosImagemService;
 
 @RestController
 @RequestMapping(value = "produto")
 public class ProdutoResources {
 	@Autowired private ProdutoService prodService;
+	@Autowired private ProdutosImagemService imgService;
 	
 	@PostMapping
 	public ResponseEntity<Produto> save(@RequestBody Produto p){
@@ -52,5 +57,13 @@ public class ProdutoResources {
 	public ResponseEntity<List<Produto>> findAll(){
 		List<Produto> lists = prodService.listAll();
 		return ResponseEntity.ok(lists);
+	}
+	
+	@PostMapping("/{id}/files")
+	public ResponseEntity<List<ProdutosImagem>> upload(@RequestParam("files") MultipartFile[] files, @PathVariable("id") Long id,
+			@RequestParam("id_usuario") Long id_usuario){
+		List<ProdutosImagem> lists = imgService.upload(id, id_usuario, files);
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(lists);
 	}
 }
