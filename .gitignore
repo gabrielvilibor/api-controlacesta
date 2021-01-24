@@ -32,5 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 *.properties
-*.java
 src/main/java/com/example/security/SecurityConfig.java
