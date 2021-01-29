@@ -60,6 +60,12 @@ public class ProdutoResources {
 		return ResponseEntity.ok(lists);
 	}
 	
+	@GetMapping("/{id}/files")
+	public ResponseEntity<ProdutosImagem> getByProdutoImagem(@PathVariable("id") Long id){
+		ProdutosImagem pi = imgService.getById(id);
+		return ResponseEntity.ok(pi);
+	}
+	
 	@PostMapping("/{id}/files")
 	public ResponseEntity<List<ProdutosImagem>> upload(@PathVariable("id") Long id, @RequestPart("files") MultipartFile[] files){
 		ProdutosImagem pi = imgService.getById(id);
