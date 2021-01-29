@@ -35,9 +35,5 @@ public class ProdutosImagem implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "id_produto")
 	private Produto produto;
-	
-	@ManyToOne
-	@JoinColumn(name = "user_id", nullable = false)
-	private Usuario usuario;
 
 }

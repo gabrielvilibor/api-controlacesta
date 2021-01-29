@@ -25,21 +25,21 @@ public class S3Config {
 	@Value("${app.aws.s3.bucket-name}")
 	private String bucketName;
 	
-	@Bean(name = "awsS3")
+	@Bean(name = "awsS3")	
 	public AmazonS3 getAmazonS3() {
-		AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
-		AWSCredentialsProvider awsCredentialsProvider = new AWSStaticCredentialsProvider(credentials);
-		
-		AmazonS3 s3 = AmazonS3ClientBuilder.standard()
-										.withCredentials(awsCredentialsProvider)
-										.withRegion(getRegion())
-										.build();
+		AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey); // Instancio as credenciais do usuário IAM
+                
+		AmazonS3 s3 = AmazonS3ClientBuilder.standard() // Nesta linha eu crio o objeto s3 com as permissões do usuário IAM 
+                    .withCredentials(new AWSStaticCredentialsProvider(credentials)) // Utilizo as credenciais 
+                    .withRegion(Regions.US_EAST_2) // Seto a região do S3
+                    .build(); // Crio o objeto com permissão IAM
+                
 		return s3;
 	}
 	
 	@Bean(name = "awsRegion")
 	public String getRegion() {
-		return Region.getRegion(Regions.US_EAST_1).getName();		
+		return Region.getRegion(Regions.US_EAST_2).getName();		
 	}
 	
 	@Bean(name = "awsBucket")

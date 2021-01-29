@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -60,9 +61,10 @@ public class ProdutoResources {
 	}
 	
 	@PostMapping("/{id}/files")
-	public ResponseEntity<List<ProdutosImagem>> upload(@RequestParam("files") MultipartFile[] files, @PathVariable("id") Long id,
-			@RequestParam("id_usuario") Long id_usuario){
-		List<ProdutosImagem> lists = imgService.upload(id, id_usuario, files);
+	public ResponseEntity<List<ProdutosImagem>> upload(@PathVariable("id") Long id, @RequestPart("files") MultipartFile[] files){
+		ProdutosImagem pi = imgService.getById(id);
+		imgService.delete(pi.getId());
+		List<ProdutosImagem> lists = imgService.upload(id, files);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(lists);
 	}

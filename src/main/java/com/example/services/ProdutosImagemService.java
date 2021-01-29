@@ -22,7 +22,7 @@ public class ProdutosImagemService {
 	@Autowired private ProdutosImagemRepository piRepository;
 	@Autowired private S3Service s3Service;
 	
-	public List<ProdutosImagem> upload(Long id_produto, Long id_user, MultipartFile[] files){
+	public List<ProdutosImagem> upload(Long id_produto, MultipartFile[] files){
 		
 		List<UploadFileModel> uploadFiles = s3Service.upload(files);
 		List<ProdutosImagem> produtosImagem = new ArrayList<ProdutosImagem>();
@@ -36,10 +36,6 @@ public class ProdutosImagemService {
 			produto.setId(id_produto);			
 			file.setProduto(produto);
 			
-			Usuario user = new Usuario();
-			user.setId(id_user);			
-			file.setUsuario(user);
-			
 			produtosImagem.add(file);
 		});
 		
@@ -49,6 +45,10 @@ public class ProdutosImagemService {
 	public ProdutosImagem getById(Long id) {
 		Optional<ProdutosImagem> result = piRepository.findAllByProdutoId(id);
 		return result.orElseThrow(()-> new NotFoundException("ID de Produto Imagem não encontrado"));
+	}
+	
+	public void delete(Long id) {
+		piRepository.deleteById(id);
 	}
 
 }
