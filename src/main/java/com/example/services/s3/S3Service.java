@@ -19,8 +19,8 @@ import com.example.model.UploadFileModel;
 @Service
 public class S3Service {
 
-    private String bucket;
-    private String region;
+    private String bucket = "controlacesta-images";
+    private String region = "us-east-2";
     private S3Config s3Config;
 
     @Autowired
