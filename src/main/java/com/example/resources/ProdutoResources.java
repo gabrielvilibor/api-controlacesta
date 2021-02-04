@@ -68,9 +68,14 @@ public class ProdutoResources {
 	
 	@PostMapping("/{id}/files")
 	public ResponseEntity<List<ProdutosImagem>> upload(@PathVariable("id") Long id, @RequestPart("files") MultipartFile[] files){
-		ProdutosImagem pi = imgService.getById(id);
-		imgService.delete(pi.getId());
+		if(imgService.getById(id) != null) {
+			ProdutosImagem pi = imgService.getById(id);
+			imgService.delete(pi.getId());
+		}
 		List<ProdutosImagem> lists = imgService.upload(id, files);
+		Produto p = prodService.getById(id);
+		lists.forEach(pim -> p.setFoto(pim.getNome()));
+		prodService.update(p);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(lists);
 	}

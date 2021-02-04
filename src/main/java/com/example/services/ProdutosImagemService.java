@@ -44,7 +44,8 @@ public class ProdutosImagemService {
 	
 	public ProdutosImagem getById(Long id) {
 		Optional<ProdutosImagem> result = piRepository.findAllByProdutoId(id);
-		return result.orElseThrow(()-> new NotFoundException("ID de Produto Imagem não encontrado"));
+		//return result.orElseThrow(()-> new NotFoundException("ID de Produto Imagem não encontrado"));
+		return result.orElse(null);
 	}
 	
 	public void delete(Long id) {

@@ -50,7 +50,7 @@ public class S3Service {
                 s3Client.putObject(new PutObjectRequest(bucket, fileName, input, meta) // Adiciona o objeto InputStream ao S3
                         .withCannedAcl(CannedAccessControlList.PublicRead)); // O acesso é público para que o seu front-end possa exibir por meio da URL
 
-                String caminho = getFileLocalizacao(fileName); // Crio o caminho do arquivo no S3 para acesso via URL
+                String caminho = getFileLocalizacao(s3FileName); // Crio o caminho do arquivo no S3 para acesso via URL
                 caminho = caminho.replaceAll(" ", "+"); // Caso haja espaço o navegador troca por %20, então antecipo trocando " " por "+" para que o navegador identifuqe corretamente no front-end
                 
                 UploadFileModel uploadModel = new UploadFileModel(s3FileName, caminho); // Crio o objeto uploadModel
