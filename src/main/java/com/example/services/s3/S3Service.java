@@ -47,7 +47,7 @@ public class S3Service {
 
                 AmazonS3 s3Client = s3Config.getAmazonS3(); // Busco o objeto s3 com as permissões do IAM
 
-                s3Client.putObject(new PutObjectRequest(bucket, fileName, input, meta) // Adiciona o objeto InputStream ao S3
+                s3Client.putObject(new PutObjectRequest(bucket, s3FileName, input, meta) // Adiciona o objeto InputStream ao S3
                         .withCannedAcl(CannedAccessControlList.PublicRead)); // O acesso é público para que o seu front-end possa exibir por meio da URL
 
                 String caminho = getFileLocalizacao(s3FileName); // Crio o caminho do arquivo no S3 para acesso via URL

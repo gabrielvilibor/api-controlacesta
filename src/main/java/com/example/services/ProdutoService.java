@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.domain.Produto;
+import com.example.domain.Usuario;
 import com.example.exception.NotFoundException;
 import com.example.repository.ProdutoRepository;
 
@@ -37,7 +38,12 @@ public class ProdutoService {
 	public List<Produto> listAll() {
 		List<Produto> list = produtoRepository.findAll();
 		return list;
-	}	
+	}
+	
+	public List<Produto> listByUsuario(Usuario u){
+		List<Produto> list = produtoRepository.findByUsuario(u);
+		return list;
+	}
 	
 
 }

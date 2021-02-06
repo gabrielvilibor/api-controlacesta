@@ -19,14 +19,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.domain.Produto;
 import com.example.domain.ProdutosImagem;
+import com.example.domain.Usuario;
 import com.example.services.ProdutoService;
 import com.example.services.ProdutosImagemService;
+import com.example.services.UsuarioService;
 
 @RestController
 @RequestMapping(value = "produto")
 public class ProdutoResources {
 	@Autowired private ProdutoService prodService;
 	@Autowired private ProdutosImagemService imgService;
+	@Autowired private UsuarioService uService;
 	
 	@PostMapping
 	public ResponseEntity<Produto> save(@RequestBody Produto p){
@@ -44,6 +47,8 @@ public class ProdutoResources {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Produto> delete(@PathVariable(name = "id") Long id){
 		Produto p = prodService.getById(id);
+		ProdutosImagem pi = imgService.getById(id);
+		imgService.delete(pi.getId());
 		prodService.delete(id);
 		return ResponseEntity.ok(p);
 	}
@@ -57,6 +62,13 @@ public class ProdutoResources {
 	@GetMapping
 	public ResponseEntity<List<Produto>> findAll(){
 		List<Produto> lists = prodService.listAll();
+		return ResponseEntity.ok(lists);
+	}
+	
+	@GetMapping("/{id}/usuario")
+	public ResponseEntity<List<Produto>> getByUsuario(@PathVariable("id") Long id){
+		Usuario u = uService.getById(id);
+		List<Produto> lists = prodService.listByUsuario(u);
 		return ResponseEntity.ok(lists);
 	}
 	
