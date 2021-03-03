@@ -59,6 +59,12 @@ public class CestasResources {
 		return ResponseEntity.ok(lists);
 	}
 	
+	@GetMapping("/{id}/configuracao")
+	public ResponseEntity<List<Cestas>> findAllbyConfiguracao(@PathVariable("id") Integer id){
+		List<Cestas> lists = cestasService.listAllbyConf(id);
+		return ResponseEntity.ok(lists);
+	}
+	
 	@GetMapping("/{id}/itens")
 	public ResponseEntity<List<CestasItens>> findAllItensById(@PathVariable("id") Integer id){
 		List<CestasItens> lists = itensService.listAllItensById(id);

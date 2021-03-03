@@ -15,13 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.domain.ConfiguracaoItens;
+import com.example.domain.Produto;
 import com.example.services.ConfiguracaoItensService;
+import com.example.services.ProdutoService;
 
 @RestController
 @RequestMapping(value = "configuracaoitens")
 public class ConfiguracaoItensResources {
 	
 	@Autowired private ConfiguracaoItensService itemService;
+	@Autowired private ProdutoService prodService;
 	
 	@PostMapping
 	public ResponseEntity<ConfiguracaoItens> save(@RequestBody ConfiguracaoItens cc){
@@ -32,6 +35,15 @@ public class ConfiguracaoItensResources {
 	@PutMapping("/{id}")
 	public ResponseEntity<ConfiguracaoItens> update(@PathVariable(name = "id") Long id, @RequestBody ConfiguracaoItens cc){
 		cc.setId(id);
+		ConfiguracaoItens ccUp = itemService.update(cc);
+		return ResponseEntity.status(HttpStatus.CREATED).body(ccUp);
+	}
+	
+	@PutMapping("/produto/{produto}/{conf}")
+	public ResponseEntity<ConfiguracaoItens> updateProd(@PathVariable(name = "produto") Long idproduto, @PathVariable(name = "conf") Long idconf, @RequestBody ConfiguracaoItens cc){
+		Produto p = prodService.getById(idproduto);
+		ConfiguracaoItens cc2 = itemService.getByProdutoConf(p, idconf);
+		cc.setId(cc2.getId());
 		ConfiguracaoItens ccUp = itemService.update(cc);
 		return ResponseEntity.status(HttpStatus.CREATED).body(ccUp);
 	}

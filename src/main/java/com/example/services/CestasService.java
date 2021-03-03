@@ -40,9 +40,9 @@ public class CestasService {
 		return list;
 	}
 	
-	/*public List<Cestas> listAllCestasById(Long id) {
-		List<Cestas> list = cestasRepository.findAllByConfiguracaoCestaId(id);
+	public List<Cestas> listAllbyConf(Integer id) {
+		List<Cestas> list = cestasRepository.findAllbyConf(id);
 		return list;
-	}*/
+	}
 
 }

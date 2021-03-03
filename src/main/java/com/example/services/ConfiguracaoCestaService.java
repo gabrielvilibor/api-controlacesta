@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.domain.Cestas;
 import com.example.domain.ConfiguracaoCesta;
+import com.example.domain.Usuario;
 import com.example.exception.NotFoundException;
 import com.example.repository.ConfiguracaoCestaRepository;
 
@@ -39,5 +40,12 @@ public class ConfiguracaoCestaService {
 		List<ConfiguracaoCesta> list = confRepository.findAll();
 		return list;
 	}
+	
+	public List<ConfiguracaoCesta> getByUsuario(Usuario u) {
+		List<ConfiguracaoCesta> list = confRepository.findByUsuario(u);
+		return list;
+	}
+	
+	
 
 }

@@ -3,13 +3,13 @@ package com.example.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.example.domain.Cestas;
-import com.example.domain.ConfiguracaoCesta;
 
 public interface CestasRepository extends JpaRepository<Cestas, Long>{
 	
-	//public List<Cestas> findAllByConfiguracaoCestaId(Long id);
+	@Query("SELECT c FROM cestas c WHERE id_conf_cesta = ?1")
+	public List<Cestas> findAllbyConf(Integer id);
 
 }

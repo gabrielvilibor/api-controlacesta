@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.domain.CestasItens;
 import com.example.domain.ConfiguracaoItens;
+import com.example.domain.Produto;
 import com.example.exception.NotFoundException;
 import com.example.repository.ConfiguracaoItensRepository;
 
@@ -32,6 +33,11 @@ public class ConfiguracaoItensService {
 	
 	public ConfiguracaoItens getById(Long id) {
 		Optional<ConfiguracaoItens> result = itensRepository.findById(id);
+		return result.orElseThrow(()-> new NotFoundException("ID de Itens de Configuração não encontrado"));
+	}
+	
+	public ConfiguracaoItens getByProdutoConf(Produto p, Long idconf) {
+		Optional<ConfiguracaoItens> result = itensRepository.findByProdConf(idconf, p.getId());
 		return result.orElseThrow(()-> new NotFoundException("ID de Itens de Configuração não encontrado"));
 	}
 	

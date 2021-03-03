@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.domain.Cestas;
 import com.example.domain.ConfiguracaoCesta;
 import com.example.domain.ConfiguracaoItens;
+import com.example.domain.Usuario;
 import com.example.services.CestasService;
 import com.example.services.ConfiguracaoCestaService;
 import com.example.services.ConfiguracaoItensService;
+import com.example.services.UsuarioService;
 
 @RestController
 @RequestMapping(value = "configuracaocesta")
@@ -29,6 +31,7 @@ public class ConfiguracaoCestaResources {
 	@Autowired private ConfiguracaoCestaService confService;
 	@Autowired private CestasService cestasService;
 	@Autowired private ConfiguracaoItensService itensService;
+	@Autowired private UsuarioService userService;
 	
 	@PostMapping
 	public ResponseEntity<ConfiguracaoCesta> save(@RequestBody ConfiguracaoCesta cc){
@@ -63,11 +66,12 @@ public class ConfiguracaoCestaResources {
 	}
 	
 	
-	/*@GetMapping("/{id}/cestas")
-	public ResponseEntity<List<Cestas>> listAllCestasById(@PathVariable(name = "id") Long id){
-		List<Cestas> lists = cestasService.listAllCestasById(id);
+	@GetMapping("/{id}/usuario")
+	public ResponseEntity<List<ConfiguracaoCesta>> listAllCestasById(@PathVariable(name = "id") Long id){
+		Usuario u = userService.getById(id);
+		List<ConfiguracaoCesta> lists = confService.getByUsuario(u);
 		return ResponseEntity.ok(lists);
-	}*/
+	}
 	
 	@GetMapping("/{id}/itens")
 	public ResponseEntity<List<ConfiguracaoItens>> getItens(@PathVariable("id") Integer id){
