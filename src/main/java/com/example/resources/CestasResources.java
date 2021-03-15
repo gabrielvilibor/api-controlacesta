@@ -41,10 +41,9 @@ public class CestasResources {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Cestas> delete(@PathVariable("id") Long id){
-		Cestas c = cestasService.getById(id);
+	public ResponseEntity delete(@PathVariable("id") Long id){
 		cestasService.delete(id);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(c);
+		return ResponseEntity.status(HttpStatus.CREATED).body(id);
 	}
 	
 	@GetMapping("/{id}")
